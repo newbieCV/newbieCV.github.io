@@ -307,4 +307,30 @@
         <category>随笔</category>
       </categories>
   </entry>
+  <entry>
+    <title>XCode之代码块</title>
+    <url>/2023/03/31/XCode%E4%B9%8B%E4%BB%A3%E7%A0%81%E5%9D%97/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><span id="more"></span>
+
+<p>新建代码块：</p>
+<img data-src="/2023/03/31/XCode%E4%B9%8B%E4%BB%A3%E7%A0%81%E5%9D%97/%E6%96%B0%E5%BB%BA%E4%BB%A3%E7%A0%81%E5%9D%97.png" class>
+<ol>
+<li>在XCode工程中右键，选择<code>create code snippet</code>。</li>
+<li>编辑代码块内容，关联属性使用<code>&lt;#name#&gt;</code>来设置。</li>
+<li>设置快捷键。</li>
+</ol>
+<p>代码块的使用：</p>
+<ol>
+<li>输入代码块中设置的快捷指令，<strong>如果没有提示可点击<code>esc</code>键</strong>。</li>
+<li>如果没有设置快捷指令，可点击右上角的<code>+</code>键，找到想输入的代码块双击。</li>
+</ol>
+<p>代码块的保存位置:<br><code>/Users/bytedance/Library/Developer/Xcode/UserData/CodeSnippets</code>，<br>更新后需要重启XCode才会生效😯</p>
+]]></content>
+      <categories>
+        <category>XCode</category>
+      </categories>
+      <tags>
+        <tag>Code Snippets</tag>
+      </tags>
+  </entry>
 </search>
