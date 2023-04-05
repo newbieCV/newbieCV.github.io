@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.jpeg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha256-/4UQcSmErDzPCMAiuOiWPVVsNN2s3ZY/NsmXNcj0IFc=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"newbiecv.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.15.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="从零开始创建一个app，逐步深入了解各种相关优化，逐步添加各种Demo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从零创建一个iOS端app——01创建工程">
+<meta property="og:url" content="https://newbiecv.github.io/2023/04/03/%E4%BB%8E%E9%9B%B6%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAiOS%E7%AB%AFapp%E2%80%94%E2%80%9401%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B/index.html">
+<meta property="og:site_name" content="章肿鱼">
+<meta property="og:description" content="从零开始创建一个app，逐步深入了解各种相关优化，逐步添加各种Demo">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://newbiecv.github.io/2023/04/03/%E4%BB%8E%E9%9B%B6%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAiOS%E7%AB%AFapp%E2%80%94%E2%80%9401%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B/%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B.png">
+<meta property="article:published_time" content="2023-04-02T18:08:07.000Z">
+<meta property="article:modified_time" content="2023-04-05T08:58:13.441Z">
+<meta property="article:author" content="Alex Zhang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://newbiecv.github.io/2023/04/03/%E4%BB%8E%E9%9B%B6%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAiOS%E7%AB%AFapp%E2%80%94%E2%80%9401%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B/%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B.png">
+
+
+<link rel="canonical" href="https://newbiecv.github.io/2023/04/03/%E4%BB%8E%E9%9B%B6%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAiOS%E7%AB%AFapp%E2%80%94%E2%80%9401%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://newbiecv.github.io/2023/04/03/%E4%BB%8E%E9%9B%B6%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAiOS%E7%AB%AFapp%E2%80%94%E2%80%9401%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B/","path":"2023/04/03/从零创建一个iOS端app——01创建工程/","title":"从零创建一个iOS端app——01创建工程"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>从零创建一个iOS端app——01创建工程 | 章肿鱼</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">章肿鱼</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个只会CV的程序🐒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B%EF%BC%88AppHome%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">创建工程（AppHome）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Assets-xcassets"><span class="nav-number">2.</span> <span class="nav-text">Assets.xcassets</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AppIcon"><span class="nav-number">2.1.</span> <span class="nav-text">AppIcon</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AccentColor"><span class="nav-number">2.2.</span> <span class="nav-text">AccentColor</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E5%BA%95tab"><span class="nav-number">3.</span> <span class="nav-text">添加底tab</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tabBarItem%E5%9B%BE%E7%89%87%E5%A4%A7%E5%B0%8F%E9%97%AE%E9%A2%98"><span class="nav-number">3.1.</span> <span class="nav-text">tabBarItem图片大小问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tabBarItem%E5%8D%95%E7%8B%AC%E8%AE%BE%E7%BD%AE%E6%96%87%E5%AD%97%E9%A2%9C%E8%89%B2%E5%92%8C%E5%9B%BE%E7%89%87%E9%A2%9C%E8%89%B2"><span class="nav-number">3.2.</span> <span class="nav-text">tabBarItem单独设置文字颜色和图片颜色</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Alex Zhang"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Alex Zhang</p>
+  <div class="site-description" itemprop="description">讨好世界不如取悦自己</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/newbiecv" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;newbiecv" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:zhangzongyu00@gmail.com" title="E-Mail → mailto:zhangzongyu00@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://newbiecv.github.io/2023/04/03/%E4%BB%8E%E9%9B%B6%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAiOS%E7%AB%AFapp%E2%80%94%E2%80%9401%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Alex Zhang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="章肿鱼">
+      <meta itemprop="description" content="讨好世界不如取悦自己">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="从零创建一个iOS端app——01创建工程 | 章肿鱼">
+      <meta itemprop="description" content="从零开始创建一个app，逐步深入了解各种相关优化，逐步添加各种Demo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          从零创建一个iOS端app——01创建工程
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-04-03 02:08:07" itemprop="dateCreated datePublished" datetime="2023-04-03T02:08:07+08:00">2023-04-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-04-05 16:58:13" itemprop="dateModified" datetime="2023-04-05T16:58:13+08:00">2023-04-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%BB%8E%E9%9B%B6%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAiOS%E7%AB%AFapp/" itemprop="url" rel="index"><span itemprop="name">从零创建一个iOS端app</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">从零开始创建一个app，逐步深入了解各种相关优化，逐步添加各种Demo</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <span id="more"></span>
+
+<h2 id="创建工程（AppHome）"><a href="#创建工程（AppHome）" class="headerlink" title="创建工程（AppHome）"></a>创建工程（AppHome）</h2><ol>
+<li>打开Xcode，选择<code>Create a new Xcode project</code> ;</li>
+<li>点击<code>iOS</code>tab，选择<code>App</code>；</li>
+<li>填写应用相关内容：<img data-src="/2023/04/03/%E4%BB%8E%E9%9B%B6%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAiOS%E7%AB%AFapp%E2%80%94%E2%80%9401%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B/%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B.png" class><ul>
+<li><code>Product Name</code>，app名称</li>
+<li><code>Team</code>开发者账号，选择None只能使用模拟器</li>
+<li><code>Organization Identifier</code>，组织唯一标识，一般使用网站域名倒写</li>
+<li><code>Bundle Identifier</code>，应用唯一标识，<strong>不可修改</strong></li>
+<li><code>Interface</code>，接口，选择Storyboard</li>
+<li><code>Language</code>，语言，选择Swift</li>
+<li><code>Use Core Data</code>，是否使用持久化数据存储，暂不需要，先不勾选</li>
+<li><code>Include Tests</code>，添加测试类，不需要，取消勾选</li>
+</ul>
+</li>
+<li>选择存储位置，等待创建完成。</li>
+<li>本地打开工程文件，添加Pod依赖库：<ul>
+<li>本地没有安装<code>CocoaPods</code>的话需要提前安装；</li>
+<li>命令行创建pod依赖<code>pod init</code>；</li>
+<li><code>Podfile</code>添加依赖库；</li>
+<li>更新pod依赖<code>pod install --repo-update</code>。</li>
+</ul>
+</li>
+<li>打开<code>***.xcworkspace</code>工程即可开始编写app。</li>
+</ol>
+<h2 id="Assets-xcassets"><a href="#Assets-xcassets" class="headerlink" title="Assets.xcassets"></a>Assets.xcassets</h2><p>资源文件管理的地方，一般用于存放图片等资源文件。iOS 11之后也可存放颜色组（可用于适配深色模式）。</p>
+<h3 id="AppIcon"><a href="#AppIcon" class="headerlink" title="AppIcon"></a>AppIcon</h3><p>推荐几个好用的图片相关网站：</p>
+<ul>
+<li>图片压缩：<a target="_blank" rel="noopener" href="https://tinypng.com/">https://tinypng.com</a></li>
+<li>生成<code>app icon</code>：<a target="_blank" rel="noopener" href="https://www.appicon.co/">https://www.appicon.co</a> </li>
+<li>IconFont：<a target="_blank" rel="noopener" href="https://www.iconfont.cn/">https://www.iconfont.cn</a></li>
+</ul>
+<p>将生成好的icon图片添加到主工程<code>Assets.xcassets</code>中<code>AppIcon</code>占位图即可。</p>
+<h3 id="AccentColor"><a href="#AccentColor" class="headerlink" title="AccentColor"></a>AccentColor</h3><p><strong>iOS11才支持</strong>，统一管理颜色，方便开发进行颜色替换。</p>
+<p>主题色，右侧<code>Color Set</code>下的<code>Appearances</code>可选择<code>Any,Dark</code>，设置默认风格和黑暗风格的颜色。</p>
+<p>调用方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">swift</span><br><span class="line">bkg.backgroundColor = UIColor(named: &quot;theme_color&quot;)</span><br><span class="line"></span><br><span class="line">object-c</span><br><span class="line">bkg.backgroundColor = [UIColor colorNamed:@&quot;theme_color&quot;];</span><br></pre></td></tr></table></figure>
+
+<h2 id="添加底tab"><a href="#添加底tab" class="headerlink" title="添加底tab"></a>添加底tab</h2><ul>
+<li>AppDelegate是iOS中应用程序的主要入口点。Apple为几个应用程序级生命周期事件调用AppDelegate方法。</li>
+<li>当AppDelegate是负责应用程序生命周期的对象时，<code>SceneDelegate</code>负责屏幕上显示的内容（scenes or windows）。当你处理scene时，对你的用户来说看起来像window的东西实际上被称为UIScene，它是由UISceneSession管理的。当我们提到windows时，我们实际上指的是UISceneSession对象。</li>
+</ul>
+<p>通常一个app中，首页都是一个底tab（UITabBarController）可供用户选择不同的功能场景：</p>
+<ol>
+<li>创建一个<code>UITabBarController</code>；</li>
+<li>创建多个<code>UIViewController</code>，并设置VC的<code>tabBarItem</code>；</li>
+<li>将生成的多个VC添加到tabBar的viewControllers；</li>
+<li>在<code>SceneDelegate</code>的<code>scene</code>方法中将tabBar设置为window的<code>rootViewController</code><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) &#123;</span><br><span class="line">    let tabbar = UITabBarController()</span><br><span class="line">    window?.rootViewController = tabbar</span><br><span class="line">    guard let _ = (scene as? UIWindowScene) else &#123; return &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="tabBarItem图片大小问题"><a href="#tabBarItem图片大小问题" class="headerlink" title="tabBarItem图片大小问题"></a>tabBarItem图片大小问题</h3><p>找了两张图片，发现尺寸过大，导致图片超出父视图区域。<br>看网上方法基本都是修改<code>tabBarItem.imageInsets</code>，试了之后发现没有生效。<br>所以，还是重新绘制一下吧。</p>
+<p>写了一个工具类：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class ImageTools &#123;</span><br><span class="line">    // 裁剪图片到指定大小</span><br><span class="line">    class func tailorImage(image: UIImage?, newSize: CGSize) -&gt; UIImage &#123;</span><br><span class="line">        guard let originImg = image else &#123;</span><br><span class="line">            return UIImage()</span><br><span class="line">        &#125;</span><br><span class="line">        UIGraphicsBeginImageContext(newSize)</span><br><span class="line">        originImg.draw(in: CGRect(origin: CGPoint.zero, size: newSize))</span><br><span class="line">        let newImg = UIGraphicsGetImageFromCurrentImageContext() ?? originImg</span><br><span class="line">        UIGraphicsEndImageContext()</span><br><span class="line">        return newImg</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="tabBarItem单独设置文字颜色和图片颜色"><a href="#tabBarItem单独设置文字颜色和图片颜色" class="headerlink" title="tabBarItem单独设置文字颜色和图片颜色"></a>tabBarItem单独设置文字颜色和图片颜色</h3><p>设置tabBar的tintColor会同时修改tabBarItem的图片和文字颜色，需要对文字颜色单独进行修改。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tabBar.tintColor = .orange</span><br><span class="line">// 设置文字颜色不跟随tintColor</span><br><span class="line">UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor(named: &quot;textColor&quot;) ?? .tintColor], for: .selected)</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/03/31/XCode%E4%B9%8B%E4%BB%A3%E7%A0%81%E5%9D%97/" rel="prev" title="XCode之代码块">
+                  <i class="fa fa-chevron-left"></i> XCode之代码块
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alex Zhang</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

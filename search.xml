@@ -333,4 +333,68 @@
         <tag>Code Snippets</tag>
       </tags>
   </entry>
+  <entry>
+    <title>从零创建一个iOS端app——01创建工程</title>
+    <url>/2023/04/03/%E4%BB%8E%E9%9B%B6%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAiOS%E7%AB%AFapp%E2%80%94%E2%80%9401%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><span id="more"></span>
+
+<h2 id="创建工程（AppHome）"><a href="#创建工程（AppHome）" class="headerlink" title="创建工程（AppHome）"></a>创建工程（AppHome）</h2><ol>
+<li>打开Xcode，选择<code>Create a new Xcode project</code> ;</li>
+<li>点击<code>iOS</code>tab，选择<code>App</code>；</li>
+<li>填写应用相关内容：<img data-src="/2023/04/03/%E4%BB%8E%E9%9B%B6%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAiOS%E7%AB%AFapp%E2%80%94%E2%80%9401%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B/%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B.png" class><ul>
+<li><code>Product Name</code>，app名称</li>
+<li><code>Team</code>开发者账号，选择None只能使用模拟器</li>
+<li><code>Organization Identifier</code>，组织唯一标识，一般使用网站域名倒写</li>
+<li><code>Bundle Identifier</code>，应用唯一标识，<strong>不可修改</strong></li>
+<li><code>Interface</code>，接口，选择Storyboard</li>
+<li><code>Language</code>，语言，选择Swift</li>
+<li><code>Use Core Data</code>，是否使用持久化数据存储，暂不需要，先不勾选</li>
+<li><code>Include Tests</code>，添加测试类，不需要，取消勾选</li>
+</ul>
+</li>
+<li>选择存储位置，等待创建完成。</li>
+<li>本地打开工程文件，添加Pod依赖库：<ul>
+<li>本地没有安装<code>CocoaPods</code>的话需要提前安装；</li>
+<li>命令行创建pod依赖<code>pod init</code>；</li>
+<li><code>Podfile</code>添加依赖库；</li>
+<li>更新pod依赖<code>pod install --repo-update</code>。</li>
+</ul>
+</li>
+<li>打开<code>***.xcworkspace</code>工程即可开始编写app。</li>
+</ol>
+<h2 id="Assets-xcassets"><a href="#Assets-xcassets" class="headerlink" title="Assets.xcassets"></a>Assets.xcassets</h2><p>资源文件管理的地方，一般用于存放图片等资源文件。iOS 11之后也可存放颜色组（可用于适配深色模式）。</p>
+<h3 id="AppIcon"><a href="#AppIcon" class="headerlink" title="AppIcon"></a>AppIcon</h3><p>推荐几个好用的图片相关网站：</p>
+<ul>
+<li>图片压缩：<a href="https://tinypng.com/">https://tinypng.com</a></li>
+<li>生成<code>app icon</code>：<a href="https://www.appicon.co/">https://www.appicon.co</a> </li>
+<li>IconFont：<a href="https://www.iconfont.cn/">https://www.iconfont.cn</a></li>
+</ul>
+<p>将生成好的icon图片添加到主工程<code>Assets.xcassets</code>中<code>AppIcon</code>占位图即可。</p>
+<h3 id="AccentColor"><a href="#AccentColor" class="headerlink" title="AccentColor"></a>AccentColor</h3><p><strong>iOS11才支持</strong>，统一管理颜色，方便开发进行颜色替换。</p>
+<p>主题色，右侧<code>Color Set</code>下的<code>Appearances</code>可选择<code>Any,Dark</code>，设置默认风格和黑暗风格的颜色。</p>
+<p>调用方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">swift</span><br><span class="line">bkg.backgroundColor = UIColor(named: &quot;theme_color&quot;)</span><br><span class="line"></span><br><span class="line">object-c</span><br><span class="line">bkg.backgroundColor = [UIColor colorNamed:@&quot;theme_color&quot;];</span><br></pre></td></tr></table></figure>
+
+<h2 id="添加底tab"><a href="#添加底tab" class="headerlink" title="添加底tab"></a>添加底tab</h2><ul>
+<li>AppDelegate是iOS中应用程序的主要入口点。Apple为几个应用程序级生命周期事件调用AppDelegate方法。</li>
+<li>当AppDelegate是负责应用程序生命周期的对象时，<code>SceneDelegate</code>负责屏幕上显示的内容（scenes or windows）。当你处理scene时，对你的用户来说看起来像window的东西实际上被称为UIScene，它是由UISceneSession管理的。当我们提到windows时，我们实际上指的是UISceneSession对象。</li>
+</ul>
+<p>通常一个app中，首页都是一个底tab（UITabBarController）可供用户选择不同的功能场景：</p>
+<ol>
+<li>创建一个<code>UITabBarController</code>；</li>
+<li>创建多个<code>UIViewController</code>，并设置VC的<code>tabBarItem</code>；</li>
+<li>将生成的多个VC添加到tabBar的viewControllers；</li>
+<li>在<code>SceneDelegate</code>的<code>scene</code>方法中将tabBar设置为window的<code>rootViewController</code><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) &#123;</span><br><span class="line">    let tabbar = UITabBarController()</span><br><span class="line">    window?.rootViewController = tabbar</span><br><span class="line">    guard let _ = (scene as? UIWindowScene) else &#123; return &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="tabBarItem图片大小问题"><a href="#tabBarItem图片大小问题" class="headerlink" title="tabBarItem图片大小问题"></a>tabBarItem图片大小问题</h3><p>找了两张图片，发现尺寸过大，导致图片超出父视图区域。<br>看网上方法基本都是修改<code>tabBarItem.imageInsets</code>，试了之后发现没有生效。<br>所以，还是重新绘制一下吧。</p>
+<p>写了一个工具类：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">class ImageTools &#123;</span><br><span class="line">    // 裁剪图片到指定大小</span><br><span class="line">    class func tailorImage(image: UIImage?, newSize: CGSize) -&gt; UIImage &#123;</span><br><span class="line">        guard let originImg = image else &#123;</span><br><span class="line">            return UIImage()</span><br><span class="line">        &#125;</span><br><span class="line">        UIGraphicsBeginImageContext(newSize)</span><br><span class="line">        originImg.draw(in: CGRect(origin: CGPoint.zero, size: newSize))</span><br><span class="line">        let newImg = UIGraphicsGetImageFromCurrentImageContext() ?? originImg</span><br><span class="line">        UIGraphicsEndImageContext()</span><br><span class="line">        return newImg</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="tabBarItem单独设置文字颜色和图片颜色"><a href="#tabBarItem单独设置文字颜色和图片颜色" class="headerlink" title="tabBarItem单独设置文字颜色和图片颜色"></a>tabBarItem单独设置文字颜色和图片颜色</h3><p>设置tabBar的tintColor会同时修改tabBarItem的图片和文字颜色，需要对文字颜色单独进行修改。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tabBar.tintColor = .orange</span><br><span class="line">// 设置文字颜色不跟随tintColor</span><br><span class="line">UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor(named: &quot;textColor&quot;) ?? .tintColor], for: .selected)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>从零创建一个iOS端app</category>
+      </categories>
+  </entry>
 </search>
