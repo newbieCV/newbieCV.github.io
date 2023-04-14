@@ -60,6 +60,32 @@
       </tags>
   </entry>
   <entry>
+    <title>XCode之代码块</title>
+    <url>/2023/03/31/XCode%E4%B9%8B%E4%BB%A3%E7%A0%81%E5%9D%97/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><span id="more"></span>
+
+<p>新建代码块：</p>
+<img data-src="/2023/03/31/XCode%E4%B9%8B%E4%BB%A3%E7%A0%81%E5%9D%97/%E6%96%B0%E5%BB%BA%E4%BB%A3%E7%A0%81%E5%9D%97.png" class>
+<ol>
+<li>在XCode工程中右键，选择<code>create code snippet</code>。</li>
+<li>编辑代码块内容，关联属性使用<code>&lt;#name#&gt;</code>来设置。</li>
+<li>设置快捷键。</li>
+</ol>
+<p>代码块的使用：</p>
+<ol>
+<li>输入代码块中设置的快捷指令，<strong>如果没有提示可点击<code>esc</code>键</strong>。</li>
+<li>如果没有设置快捷指令，可点击右上角的<code>+</code>键，找到想输入的代码块双击。</li>
+</ol>
+<p>代码块的保存位置:<br><code>/Users/bytedance/Library/Developer/Xcode/UserData/CodeSnippets</code>，<br>更新后需要重启XCode才会生效😯</p>
+]]></content>
+      <categories>
+        <category>XCode</category>
+      </categories>
+      <tags>
+        <tag>Code Snippets</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>frame VS bounds</title>
     <url>/2023/03/20/frame%20VS%20bounds/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="UIView布局属性"><a href="#UIView布局属性" class="headerlink" title="UIView布局属性"></a>UIView布局属性</h1><ul>
@@ -204,6 +230,52 @@
       </tags>
   </entry>
   <entry>
+    <title>iOS八股文——01</title>
+    <url>/2023/04/08/iOS%E5%85%AB%E8%82%A1%E6%96%87%E2%80%94%E2%80%9401/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><span id="more"></span>
+
+<h2 id="访问控制"><a href="#访问控制" class="headerlink" title="访问控制"></a>访问控制</h2><ul>
+<li>open，Swift3新增访问控制符，可跨module访问，open修饰的类可继承，修饰的方法可重写。</li>
+<li>public，可跨module访问，public修饰的类可访问不可被继承，修饰的方法可访问不可被重写。</li>
+<li>internal，Swift中默认的访问控制符（缺省），只对自身module内开放所有源文件，对外界屏蔽代码。</li>
+<li>fileprivate，Swift3新增访问控制符，可在当前文件内所有类访问。</li>
+<li>private，仅可在本类中访问，extension中不可访问。</li>
+</ul>
+<p>Tips：<br>在Swift3中新增了访问控制修饰符，使得Swift的访问控制更加灵活。<br>使用不同访问修饰符，可以有效降低耦合，对外界屏蔽实现细节。<br>Objective-C是动态处理语言，private只是所谓的私有，通过KVC还是能够获取。<br>Swift由于性能的考虑，默认关闭了动态处理。</p>
+<h2 id="Class-VS-Struct"><a href="#Class-VS-Struct" class="headerlink" title="Class VS Struct"></a>Class VS Struct</h2><p>两种数据结构，<br>Class是引用类型，当进行值传递的时候，传递的是对instance的引用；<br>Struct是值类型，当进行值传递的时候，会copy传递的值。</p>
+<p>相同点：</p>
+<ul>
+<li>都能定义Property、Method、Initializers。</li>
+<li>都支持Protocol、Extension。<br>不同点：</li>
+<li>Class是引用类型，Struct是值类型。</li>
+<li>Class支持继承，Struct不支持。</li>
+<li>Struct声明的方法属性修改需要<code>mutating</code>关键字，Class不需要。</li>
+<li>Class支持引用计数和<code>Deinitializers</code>（释放实例deinit），Struct不支持。</li>
+<li>Struct提供默认的<code>memberwise initializer</code>（自动执行初始化器，对每个存储属性进行赋值）。</li>
+<li>Class支持<code>type casting</code>（类型判断 is or as）。</li>
+</ul>
+<p>对instance的判等使用<code>===</code>或<code>!==</code>。<br><code>==</code>，判别的是两个变量或常量的值是否相同，<br>自定义的class需要遵守Equatable协议才能支持<code>==</code>操作。</p>
+<p>Struct存储在stack中，Class存储在heap中，<br>相对来说，Struct效率更高，而且不需要考虑内存泄漏和多线程读写问题（copy的好处）。</p>
+<h2 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h2><p>单例一旦创建，一直持有，不能手动销毁，但可以重置数据。如果需要的话，可以添加一个重置数据的方法。</p>
+<h3 id="Swift单例模式"><a href="#Swift单例模式" class="headerlink" title="Swift单例模式"></a>Swift单例模式</h3><p>主要是利用静态成员自动满足dispatch_once规则。<br>一般通过一个静态属性<code>shared</code>持有唯一实例，通过重写<code>init()</code>防止外部调用。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">final class Single &#123;</span><br><span class="line">    static let shared = Single()</span><br><span class="line">    private init() &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 其它都是基于此的一些变形，如：</span><br><span class="line">final class Single1 &#123;</span><br><span class="line">    static let shared = &#123;</span><br><span class="line">        let instance = Single1()</span><br><span class="line">        return instance</span><br><span class="line">    &#125;()</span><br><span class="line">    private init() &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Objective-C"><a href="#Objective-C" class="headerlink" title="Objective-C"></a>Objective-C</h3><p>.h文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@interface Singleton : NSObject</span><br><span class="line">+(instancetype)shareInstances;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+<p>.m文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@implementation Singleton</span><br><span class="line"></span><br><span class="line">static Singleton* _instance = nil;</span><br><span class="line"></span><br><span class="line">+(instancetype) shareInstance</span><br><span class="line">&#123;</span><br><span class="line">    static dispatch_once_t onceToken ;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        _instance = [[super allocWithZone:NULL] init] ;</span><br><span class="line">    &#125;) ;</span><br><span class="line"></span><br><span class="line">    return _instance ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+(id) allocWithZone:(struct _NSZone *)zone</span><br><span class="line">&#123;</span><br><span class="line">    return [Singleton shareInstance] ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">-(id) copyWithZone:(struct _NSZone *)zone</span><br><span class="line">&#123;</span><br><span class="line">    return [Singleton shareInstance] ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>iOS</category>
+      </categories>
+      <tags>
+        <tag>访问控制</tag>
+        <tag>Class VS Struct</tag>
+        <tag>单例</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>iOS实现点九图效果</title>
     <url>/2023/03/29/iOS%E5%AE%9E%E7%8E%B0%E7%82%B9%E4%B9%9D%E5%9B%BE%E6%95%88%E6%9E%9C/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>点九图是Android特有的切图方式，iOS也可以通过简单的图片操作来实现（调用<code>UIImage</code>的<code>resizableImage</code>方法即可）。</p>
@@ -228,110 +300,6 @@
       <categories>
         <category>iOS</category>
       </categories>
-  </entry>
-  <entry>
-    <title>我的个税退税</title>
-    <url>/2023/03/20/%E6%88%91%E7%9A%84%E4%B8%AA%E7%A8%8E%E9%80%80%E7%A8%8E/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="个人所得税"><a href="#个人所得税" class="headerlink" title="个人所得税"></a>个人所得税</h1><p>我要办税之综合所得年度汇算，在收入部分，对于年终奖部分，如果收入比较低（几千块&#x2F;月）来说，可能合并计税会比较划算；而对于身边绝大部分朋友，还是单独计税更合适。这两种计税方式可以都试下，看看到底哪个更适合自己。其次，是一些附加税的扣除。</p>
-<h2 id="专项附加税扣除"><a href="#专项附加税扣除" class="headerlink" title="专项附加税扣除"></a>专项附加税扣除</h2><ul>
-<li>子女教育，这个目前还没有，先不考虑</li>
-<li>继续教育，这部分还有提升空间，分为两部分：<ul>
-<li>学历继续教育，说实话，目前来说也不再考虑了😅</li>
-<li>职业资格继续教育，这部分还可以技术提升下，有些需要一定的时间精力的，比如软考中级证书、初级会计资格证等，还有一些是不需要花费多少时间的，这种的就比较友好了。</li>
-</ul>
-</li>
-<li>大病医疗，还没有，也不希望有 嘿嘿</li>
-<li>住房贷款利息，目前还没有，快了快了</li>
-<li>住房租金<ul>
-<li>有一定要如实填写，这部分能有一万八的抵税额度，公司发的工资虽然已经扣除过了，但是如果自己不申报会把这部分的额度重新计税。</li>
-</ul>
-</li>
-<li>赡养老人，父母到60岁才可以用，别的没办法</li>
-<li>3岁以下婴幼儿护照，有了孩子再说吧，感觉离我还很遥远</li>
-</ul>
-<h2 id="职业资格认证"><a href="#职业资格认证" class="headerlink" title="职业资格认证"></a>职业资格认证</h2><h3 id="阿⾥云Apsara-Clouder云计算专项技能认证"><a href="#阿⾥云Apsara-Clouder云计算专项技能认证" class="headerlink" title="阿⾥云Apsara Clouder云计算专项技能认证"></a><a href="https://edu.aliyun.com/certification/cldc15">阿⾥云Apsara Clouder云计算专项技能认证</a></h3><p>网站：<a href="https://edu.aliyun.com/certification/cldc15">https://edu.aliyun.com/certification/cldc15</a></p>
-<p><em>0成本考证填报个税纳税额减免3600</em></p>
-<p>题目比较固定，大部分题目网上很多答案，直接搜就可以了。贴一个自用的链接答案 <a href="https://blog.csdn.net/spacehhy/article/details/128917928">https://blog.csdn.net/spacehhy/article/details/128917928</a></p>
-<p>申报：<br>    1. <code>职业资格继续教育类型</code>选择<code>专业技术人员职业资格</code>；<br>    2. 发证日期 &amp; 证书编号，填写证书上的信息；<br>    3. <code>证书名称</code>选择<code>计算机技术与软件专业技术资格</code>；<br>    4. <code>发证机关</code>选择<code>阿里云</code>。</p>
-]]></content>
-      <categories>
-        <category>工作相关</category>
-      </categories>
-      <tags>
-        <tag>个人所得税</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>捕鼠器の故事</title>
-    <url>/2023/03/25/%E6%8D%95%E9%BC%A0%E5%99%A8%E7%9A%84%E6%95%85%E4%BA%8B/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>
-        <div id="aplayer-sUqYyeIS" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
-            <pre class="aplayer-lrc-content"></pre>
-        </div>
-        <script>
-          var ap = new APlayer({
-            element: document.getElementById("aplayer-sUqYyeIS"),
-            narrow: false,
-            autoplay: false,
-            showlrc: false,
-            music: {
-              title: "朗读这篇文章",
-              author: "章肿鱼",
-              url: "捕鼠器的故事.mp3",
-              pic: "/images/avatar.jpeg",
-              lrc: ""
-            }
-          });
-          window.aplayers || (window.aplayers = []);
-          window.aplayers.push(ap);
-        </script>
-
-<p><strong>从收到一个需求，去做一件事，到解决某一类问题，这是一个坎。</strong></p>
-<span id="more"></span>
-
-<p>假设你是一个工程师，这时候你被安排了一项任务“改进捕鼠器”。<br>你就要思考🤔：这个捕鼠器要怎么改进呢？<br>通常做法：</p>
-<ul>
-<li>最简单的，去搜索业界类似的Case，看有没有类似的优化（借鉴已有先进经验）；</li>
-<li>比较负责一点的同学，会考虑为什么现在的捕鼠器需要改进（捕鼠的效果差的原因），即实际产品的现存问题；</li>
-</ul>
-<p>改造过程就比作积累技术经验，一般的做完需求就stop了，不会再继续深究，获得的只限于技术的熟练或积累了类似经验。<br>进阶一步的话，就需要考虑为什么要去改进捕鼠器呢？如果回答是为了捕老鼠，这个回答无法反驳，但只是这样的话，在捕老鼠这个问题上很快就会达到一个瓶颈（毕竟技术是有限制的，<strong>捕鼠器改进再好，老鼠不过去，也很难抓到老鼠</strong>）。</p>
-<p>改造完成后通过观察（自测、内测、众测等）发现，核心问题是捕鼠器的位置不对。（这是关键点，<strong>一个RD对一个任务能够从解决问题到提出新问题是一个突破</strong>）<br>针对这个发现，已经不是捕鼠器的问题了，而是环境的限制。<br>此时就会想，使用捕鼠器的原因，本质上其实是为了根除老鼠。所以，捕鼠器本身不重要，重要的是能够杀死老鼠。<br>鉴于此，就有了进一步横向思考的可能，比如说发明捕鼠药，有的话直接购买也可以的。（这时会发现自己已经有了新的需求，如何改进灭鼠药的效果😂）</p>
-<p>其实这个故事，灭鼠不是关键，灭鼠是为了保护粮食。当把老鼠都消灭之后发现粮食还是保不住（比如，被雨水淋坏了等）。<br>再继续深入就会发现，最终的OKR其实是为了保护粮食。那么，如何定义保护粮食是否有提升呢？比如，粮食留存率等等，这时候就可以去定义粮食保护的评估方法，进而成立粮食保护小组（可以带团队创业了）。</p>
-<img data-src="/2023/03/25/%E6%8D%95%E9%BC%A0%E5%99%A8%E7%9A%84%E6%95%85%E4%BA%8B/%E6%A6%82%E8%A7%88.png" class>
-<blockquote>
-<p>杨震原说过，对研发来说，前提是能够把现有本职工作做好，如果能进一步去思考问题的本质，能够跟最高的目标对齐，你的工作实际上会更加主动，也能更好发挥自己的能力。</p>
-</blockquote>
-<p>所以，经常想想自己在做的问题，“你在解决什么问题？”；<br>假如你是leader，还可以对员工继续提问：“这真的是你的问题吗😏”</p>
-]]></content>
-      <categories>
-        <category>随笔</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>XCode之代码块</title>
-    <url>/2023/03/31/XCode%E4%B9%8B%E4%BB%A3%E7%A0%81%E5%9D%97/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><span id="more"></span>
-
-<p>新建代码块：</p>
-<img data-src="/2023/03/31/XCode%E4%B9%8B%E4%BB%A3%E7%A0%81%E5%9D%97/%E6%96%B0%E5%BB%BA%E4%BB%A3%E7%A0%81%E5%9D%97.png" class>
-<ol>
-<li>在XCode工程中右键，选择<code>create code snippet</code>。</li>
-<li>编辑代码块内容，关联属性使用<code>&lt;#name#&gt;</code>来设置。</li>
-<li>设置快捷键。</li>
-</ol>
-<p>代码块的使用：</p>
-<ol>
-<li>输入代码块中设置的快捷指令，<strong>如果没有提示可点击<code>esc</code>键</strong>。</li>
-<li>如果没有设置快捷指令，可点击右上角的<code>+</code>键，找到想输入的代码块双击。</li>
-</ol>
-<p>代码块的保存位置:<br><code>/Users/bytedance/Library/Developer/Xcode/UserData/CodeSnippets</code>，<br>更新后需要重启XCode才会生效😯</p>
-]]></content>
-      <categories>
-        <category>XCode</category>
-      </categories>
-      <tags>
-        <tag>Code Snippets</tag>
-      </tags>
   </entry>
   <entry>
     <title>从零创建一个iOS端app——01创建工程</title>
@@ -394,7 +362,170 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tabBar.tintColor = .orange</span><br><span class="line">// 设置文字颜色不跟随tintColor</span><br><span class="line">UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor(named: &quot;textColor&quot;) ?? .tintColor], for: .selected)</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
+        <category>iOS</category>
         <category>从零创建一个iOS端app</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>从零创建一个iOS端app——02创建Pod库</title>
+    <url>/2023/04/05/%E4%BB%8E%E9%9B%B6%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAiOS%E7%AB%AFapp%E2%80%94%E2%80%9402%E5%88%9B%E5%BB%BAPod%E5%BA%93/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><span id="more"></span>
+
+<h2 id="本地创建一个Pod工程"><a href="#本地创建一个Pod工程" class="headerlink" title="本地创建一个Pod工程"></a>本地创建一个Pod工程</h2><ol>
+<li>起一个Pod仓库名，使用<code>pod lib lint 仓库名</code>来校验是否被占用。 </li>
+<li>命令行输入<code>pod lib create 仓库名</code>，之后会克隆CocoaPods的<code>pod-template</code>到该仓库。<br>在执行这个命令的时候，遇到了两个问题：<ul>
+<li><code>Ignoring ffi-1.15.5 because its extensions are not built. Try: gem pristine ffi --version 1.15.5</code>，解决方案：<ol>
+<li><code>brew install rbenv</code></li>
+<li><code>rbenv install 3.1.2</code></li>
+<li><code>rbenv global 3.1.2</code></li>
+<li><code>sudo gem install ffi --version 1.15.5 --user-install</code></li>
+</ol>
+</li>
+<li><code> Could not find &#39;rexml&#39; (~&gt; 3.2.4) - did find: [rexml-3.1.9.1] (Gem::MissingSpecVersionError)</code>，解决方案：<code>sudo gem update rexml</code>更新一下rexml版本。</li>
+</ul>
+</li>
+<li>创建过程中会有一些输入，根据自己需要来添加即可：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">What platform do you want to use?? [ iOS / macOS ]</span><br><span class="line"> &gt; iOS</span><br><span class="line"></span><br><span class="line">What language do you want to use?? [ Swift / ObjC ]</span><br><span class="line"> &gt; Swift</span><br><span class="line"></span><br><span class="line">Would you like to include a demo application with your library? [ Yes / No ]</span><br><span class="line"> &gt; Yes</span><br><span class="line"></span><br><span class="line">Which testing frameworks will you use? [ Quick / None ]</span><br><span class="line"> &gt; None</span><br><span class="line"></span><br><span class="line">Would you like to do view based testing? [ Yes / No ]</span><br><span class="line"> &gt; NO</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="本地仓库测试"><a href="#本地仓库测试" class="headerlink" title="本地仓库测试"></a>本地仓库测试</h2><p>在<code>**.podspec</code>中添加一些子仓需要的依赖（同<code>Podfile</code>），如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">s.dependency &#x27;SnapKit&#x27;, &#x27;~&gt; 5.0.0&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>对Classes中的<code>ReplaceMe.swift</code>文件进行替换。</p>
+<p>对子仓中的Example工程进行<code>pod install</code>，编写测试方法即可。</p>
+<h2 id="创建-amp-添加到远端仓库"><a href="#创建-amp-添加到远端仓库" class="headerlink" title="创建&amp;添加到远端仓库"></a>创建&amp;添加到远端仓库</h2><ol>
+<li>在GitHub创建一个同名Repo。</li>
+<li>修改本地仓的<code>**.podspec</code>文件，修改<code>s.homepage</code>和<code>s.source</code>等必要信息。</li>
+<li>本地仓库与远程仓库关联（换成自己的）：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git remote add origin https://github.com/newbieCV/AHComponents.git</span><br><span class="line">git branch -M main</span><br><span class="line">git push -u origin main</span><br></pre></td></tr></table></figure></li>
+<li>git提交本地仓修改</li>
+</ol>
+<h2 id="添加tag标签"><a href="#添加tag标签" class="headerlink" title="添加tag标签"></a>添加tag标签</h2><p>在引入子仓依赖时，都会指定一个版本号（tag标记）。<br>为了方便被引用，需要对当前代码提交打个tag标记。</p>
+<p>在本地子仓中设置tag标记，并push到远端。<br>更新完成后在远端仓库可以看到如图所示</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git tag 0.1.0</span><br><span class="line">git push --tags</span><br></pre></td></tr></table></figure>
+
+<h2 id="发布到Cocoapods"><a href="#发布到Cocoapods" class="headerlink" title="发布到Cocoapods"></a>发布到Cocoapods</h2><p>在发布前，需要对当前子仓的podspec的合法性进行检查。可选择<code>--allow-warnings</code>忽略警告。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pod lib lint --verbose</span><br></pre></td></tr></table></figure>
+
+<p>如果本地验证通过（终端最后出现<code>*** passed validation.</code>），则可以继续提交到Cocoapods。</p>
+<p>提交podspec仓库：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pod trunk push ***.podspec --verbose</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>或许高兴早了？<br><code>[!] You need to run </code>pod trunk register<code> to register a session first.</code></p>
+<p>那就注册一下trunk吧</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pod trunk register 电子邮箱 &#x27;姓名&#x27; --description=&#x27;macbook pro&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>随后出现<code>[!] Please verify the session by clicking the link in the verification email that has been sent to zhangzongyu00@gmail.com</code>，<br>打开邮箱信任一下就好。</p>
+<p>查看是否注册成功：<code>pod trunk me</code>。</p>
+<p>重新执行<code>pod trunk push ***.podspec --verbose</code>，<br>还不马上去工程里面调用试试 fun!</p>
+]]></content>
+      <categories>
+        <category>iOS</category>
+        <category>从零创建一个iOS端app</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>响铃与震动</title>
+    <url>/2023/04/15/%E5%93%8D%E9%93%83%E4%B8%8E%E9%9C%87%E5%8A%A8/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>响铃和震动是音视频通话的基础功能，如何实现呢？<br>思路其实很简单，直接上代码吧</p>
+<span id="more"></span>
+
+<h2 id="响铃处理"><a href="#响铃处理" class="headerlink" title="响铃处理"></a>响铃处理</h2><p>有个区别的点在于：</p>
+<ul>
+<li><code>AudioServicesPlayAlertSound(soundID)</code>支持响铃和震动。</li>
+<li><code>AudioServicesPlaySystemSound(soundID)</code>，仅支持响铃。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 响铃标识</span><br><span class="line">var soundID = SystemSoundID()</span><br><span class="line">// 响铃操作</span><br><span class="line">func useRing() &#123;</span><br><span class="line">    // 获取铃声资源</span><br><span class="line">    guard let path = Bundle().path(forResource: &quot;ring&quot;, ofType: &quot;mp3&quot;) else &#123; return &#125;</span><br><span class="line">    let url = NSURL(fileURLWithPath: path)</span><br><span class="line">    // 创建声音标识</span><br><span class="line">    AudioServicesCreateSystemSoundID(url, &amp;soundID)</span><br><span class="line">    // 响铃完成回调</span><br><span class="line">    AudioServicesAddSystemSoundCompletion(soundID, nil, nil, &#123; soundID, _ in</span><br><span class="line">        AudioServicesPlaySystemSound(soundID)</span><br><span class="line">    &#125;, nil)</span><br><span class="line">    // 响铃一次，完成后会自动调用完成回调，然后陷入循环</span><br><span class="line">    AudioServicesPlaySystemSound(soundID)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 停止响铃</span><br><span class="line">func stopRing() &#123;</span><br><span class="line">    AudioServicesRemoveSystemSoundCompletion(soundID)</span><br><span class="line">    AudioServicesDisposeSystemSoundID(soundID)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="震动处理"><a href="#震动处理" class="headerlink" title="震动处理"></a>震动处理</h2><p>设置一个Timer计时器，添加到runloop中去轮询就可以实现了。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">var endTimer = Timer()</span><br><span class="line">// 震动</span><br><span class="line">func useShake() &#123;</span><br><span class="line">    shakeTimer = Timer(timeInterval: 1, repeats: true, block: &#123; _ in</span><br><span class="line">        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)</span><br><span class="line">    &#125;)</span><br><span class="line">    RunLoop.current.add(shakeTimer, forMode: .defaultRunLoopMode)</span><br><span class="line">    // 开始计时</span><br><span class="line">    shakeTimer.fire()</span><br><span class="line">&#125;</span><br><span class="line">// 停止震动</span><br><span class="line">func stopShake() &#123;</span><br><span class="line">    shakeTimer.invalidate()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="同时处理响铃与震动"><a href="#同时处理响铃与震动" class="headerlink" title="同时处理响铃与震动"></a>同时处理响铃与震动</h2><p><code>AudioServicesPlayAlertSound</code>方法虽然在响铃的同时支持震动的调用，但是震动周期与响铃一致，即每次响铃完才震动一下。<br>这种Case肯定是不能接受的，那么就分开处理呗。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">func ringOrShake(type: AHRingAndShakeType, duration: TimeInterval?) &#123;</span><br><span class="line">    // 避免上次播放尚未结束</span><br><span class="line">    stopRingAndShake()</span><br><span class="line">    </span><br><span class="line">    if (type == .ringAndShake || type == .ring),</span><br><span class="line">        let path = AHTools.findSourceBundle().path(forResource: &quot;ring&quot;, ofType: &quot;mp3&quot;) &#123;</span><br><span class="line">        let url = NSURL(fileURLWithPath: path)</span><br><span class="line">        AudioServicesCreateSystemSoundID(url, &amp;soundID)</span><br><span class="line">        AudioServicesAddSystemSoundCompletion(soundID, nil, nil, &#123; soundID, _ in</span><br><span class="line">            AudioServicesPlaySystemSound(soundID)</span><br><span class="line">        &#125;, nil)</span><br><span class="line">        AudioServicesPlaySystemSound(soundID)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    var durationStr: Double = duration ?? 1</span><br><span class="line">    endTimer = Timer(timeInterval: 1, repeats: true, block: &#123; [weak self] timer in</span><br><span class="line">        if (type == .shake || type == .ringAndShake) &#123;</span><br><span class="line">            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)</span><br><span class="line">        &#125;</span><br><span class="line">        if (durationStr &lt;= 0) &#123;</span><br><span class="line">            self?.stopRingAndShake()</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            durationStr -= 1</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    RunLoop.current.add(endTimer, forMode: .defaultRunLoopMode)</span><br><span class="line">    // 开始计时</span><br><span class="line">    endTimer.fire()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 停止调用</span><br><span class="line">@objc</span><br><span class="line">public func stopRingAndShake() &#123;</span><br><span class="line">    endTimer.invalidate()</span><br><span class="line">    AudioServicesRemoveSystemSoundCompletion(soundID)</span><br><span class="line">    AudioServicesDisposeSystemSoundID(soundID)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中，为了封装，也为了更好的调用，使用了enum。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">enum AHRingAndShakeType &#123;</span><br><span class="line">    case ring</span><br><span class="line">    case shake</span><br><span class="line">    case ringAndShake</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>iOS</category>
+      </categories>
+      <tags>
+        <tag>ring and shake</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>我的个税退税</title>
+    <url>/2023/03/20/%E6%88%91%E7%9A%84%E4%B8%AA%E7%A8%8E%E9%80%80%E7%A8%8E/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="个人所得税"><a href="#个人所得税" class="headerlink" title="个人所得税"></a>个人所得税</h1><p>我要办税之综合所得年度汇算，在收入部分，对于年终奖部分，如果收入比较低（几千块&#x2F;月）来说，可能合并计税会比较划算；而对于身边绝大部分朋友，还是单独计税更合适。这两种计税方式可以都试下，看看到底哪个更适合自己。其次，是一些附加税的扣除。</p>
+<h2 id="专项附加税扣除"><a href="#专项附加税扣除" class="headerlink" title="专项附加税扣除"></a>专项附加税扣除</h2><ul>
+<li>子女教育，这个目前还没有，先不考虑</li>
+<li>继续教育，这部分还有提升空间，分为两部分：<ul>
+<li>学历继续教育，说实话，目前来说也不再考虑了😅</li>
+<li>职业资格继续教育，这部分还可以技术提升下，有些需要一定的时间精力的，比如软考中级证书、初级会计资格证等，还有一些是不需要花费多少时间的，这种的就比较友好了。</li>
+</ul>
+</li>
+<li>大病医疗，还没有，也不希望有 嘿嘿</li>
+<li>住房贷款利息，目前还没有，快了快了</li>
+<li>住房租金<ul>
+<li>有一定要如实填写，这部分能有一万八的抵税额度，公司发的工资虽然已经扣除过了，但是如果自己不申报会把这部分的额度重新计税。</li>
+</ul>
+</li>
+<li>赡养老人，父母到60岁才可以用，别的没办法</li>
+<li>3岁以下婴幼儿护照，有了孩子再说吧，感觉离我还很遥远</li>
+</ul>
+<h2 id="职业资格认证"><a href="#职业资格认证" class="headerlink" title="职业资格认证"></a>职业资格认证</h2><h3 id="阿⾥云Apsara-Clouder云计算专项技能认证"><a href="#阿⾥云Apsara-Clouder云计算专项技能认证" class="headerlink" title="阿⾥云Apsara Clouder云计算专项技能认证"></a><a href="https://edu.aliyun.com/certification/cldc15">阿⾥云Apsara Clouder云计算专项技能认证</a></h3><p>网站：<a href="https://edu.aliyun.com/certification/cldc15">https://edu.aliyun.com/certification/cldc15</a></p>
+<p><em>0成本考证填报个税纳税额减免3600</em></p>
+<p>题目比较固定，大部分题目网上很多答案，直接搜就可以了。贴一个自用的链接答案 <a href="https://blog.csdn.net/spacehhy/article/details/128917928">https://blog.csdn.net/spacehhy/article/details/128917928</a></p>
+<p>申报：<br>    1. <code>职业资格继续教育类型</code>选择<code>专业技术人员职业资格</code>；<br>    2. 发证日期 &amp; 证书编号，填写证书上的信息；<br>    3. <code>证书名称</code>选择<code>计算机技术与软件专业技术资格</code>；<br>    4. <code>发证机关</code>选择<code>阿里云</code>。</p>
+]]></content>
+      <categories>
+        <category>工作相关</category>
+      </categories>
+      <tags>
+        <tag>个人所得税</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>捕鼠器の故事</title>
+    <url>/2023/03/25/%E6%8D%95%E9%BC%A0%E5%99%A8%E7%9A%84%E6%95%85%E4%BA%8B/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>
+        <div id="aplayer-aNxNrTyv" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+            <pre class="aplayer-lrc-content"></pre>
+        </div>
+        <script>
+          var ap = new APlayer({
+            element: document.getElementById("aplayer-aNxNrTyv"),
+            narrow: false,
+            autoplay: false,
+            showlrc: false,
+            music: {
+              title: "朗读这篇文章",
+              author: "章肿鱼",
+              url: "捕鼠器的故事.mp3",
+              pic: "/images/avatar.jpeg",
+              lrc: ""
+            }
+          });
+          window.aplayers || (window.aplayers = []);
+          window.aplayers.push(ap);
+        </script>
+
+<p><strong>从收到一个需求，去做一件事，到解决某一类问题，这是一个坎。</strong></p>
+<span id="more"></span>
+
+<p>假设你是一个工程师，这时候你被安排了一项任务“改进捕鼠器”。<br>你就要思考🤔：这个捕鼠器要怎么改进呢？<br>通常做法：</p>
+<ul>
+<li>最简单的，去搜索业界类似的Case，看有没有类似的优化（借鉴已有先进经验）；</li>
+<li>比较负责一点的同学，会考虑为什么现在的捕鼠器需要改进（捕鼠的效果差的原因），即实际产品的现存问题；</li>
+</ul>
+<p>改造过程就比作积累技术经验，一般的做完需求就stop了，不会再继续深究，获得的只限于技术的熟练或积累了类似经验。<br>进阶一步的话，就需要考虑为什么要去改进捕鼠器呢？如果回答是为了捕老鼠，这个回答无法反驳，但只是这样的话，在捕老鼠这个问题上很快就会达到一个瓶颈（毕竟技术是有限制的，<strong>捕鼠器改进再好，老鼠不过去，也很难抓到老鼠</strong>）。</p>
+<p>改造完成后通过观察（自测、内测、众测等）发现，核心问题是捕鼠器的位置不对。（这是关键点，<strong>一个RD对一个任务能够从解决问题到提出新问题是一个突破</strong>）<br>针对这个发现，已经不是捕鼠器的问题了，而是环境的限制。<br>此时就会想，使用捕鼠器的原因，本质上其实是为了根除老鼠。所以，捕鼠器本身不重要，重要的是能够杀死老鼠。<br>鉴于此，就有了进一步横向思考的可能，比如说发明捕鼠药，有的话直接购买也可以的。（这时会发现自己已经有了新的需求，如何改进灭鼠药的效果😂）</p>
+<p>其实这个故事，灭鼠不是关键，灭鼠是为了保护粮食。当把老鼠都消灭之后发现粮食还是保不住（比如，被雨水淋坏了等）。<br>再继续深入就会发现，最终的OKR其实是为了保护粮食。那么，如何定义保护粮食是否有提升呢？比如，粮食留存率等等，这时候就可以去定义粮食保护的评估方法，进而成立粮食保护小组（可以带团队创业了）。</p>
+<img data-src="/2023/03/25/%E6%8D%95%E9%BC%A0%E5%99%A8%E7%9A%84%E6%95%85%E4%BA%8B/%E6%A6%82%E8%A7%88.png" class>
+<blockquote>
+<p>杨震原说过，对研发来说，前提是能够把现有本职工作做好，如果能进一步去思考问题的本质，能够跟最高的目标对齐，你的工作实际上会更加主动，也能更好发挥自己的能力。</p>
+</blockquote>
+<p>所以，经常想想自己在做的问题，“你在解决什么问题？”；<br>假如你是leader，还可以对员工继续提问：“这真的是你的问题吗😏”</p>
+]]></content>
+      <categories>
+        <category>随笔</category>
       </categories>
   </entry>
 </search>

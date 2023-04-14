@@ -20,28 +20,27 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"newbiecv.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.15.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="写给某个人的退税小技巧，虽然纳税光荣，但是目前情况生活压力还是比较大的，所以先能省的是点吧^-^">
+    <meta name="description" content="iOS开发中必不可少的会引入Pod依赖，如何创建一个属于自己的Pod库呢">
 <meta property="og:type" content="article">
-<meta property="og:title" content="我的个税退税">
-<meta property="og:url" content="https://newbiecv.github.io/2023/03/20/%E6%88%91%E7%9A%84%E4%B8%AA%E7%A8%8E%E9%80%80%E7%A8%8E/index.html">
+<meta property="og:title" content="从零创建一个iOS端app——02创建Pod库">
+<meta property="og:url" content="https://newbiecv.github.io/2023/04/05/%E4%BB%8E%E9%9B%B6%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAiOS%E7%AB%AFapp%E2%80%94%E2%80%9402%E5%88%9B%E5%BB%BAPod%E5%BA%93/index.html">
 <meta property="og:site_name" content="章肿鱼">
-<meta property="og:description" content="写给某个人的退税小技巧，虽然纳税光荣，但是目前情况生活压力还是比较大的，所以先能省的是点吧^-^">
+<meta property="og:description" content="iOS开发中必不可少的会引入Pod依赖，如何创建一个属于自己的Pod库呢">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-03-19T16:36:03.000Z">
-<meta property="article:modified_time" content="2023-03-20T17:54:28.167Z">
+<meta property="article:published_time" content="2023-04-05T12:59:26.000Z">
+<meta property="article:modified_time" content="2023-04-10T02:51:36.512Z">
 <meta property="article:author" content="Alex Zhang">
-<meta property="article:tag" content="个人所得税">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://newbiecv.github.io/2023/03/20/%E6%88%91%E7%9A%84%E4%B8%AA%E7%A8%8E%E9%80%80%E7%A8%8E/">
+<link rel="canonical" href="https://newbiecv.github.io/2023/04/05/%E4%BB%8E%E9%9B%B6%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAiOS%E7%AB%AFapp%E2%80%94%E2%80%9402%E5%88%9B%E5%BB%BAPod%E5%BA%93/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://newbiecv.github.io/2023/03/20/%E6%88%91%E7%9A%84%E4%B8%AA%E7%A8%8E%E9%80%80%E7%A8%8E/","path":"2023/03/20/我的个税退税/","title":"我的个税退税"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://newbiecv.github.io/2023/04/05/%E4%BB%8E%E9%9B%B6%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAiOS%E7%AB%AFapp%E2%80%94%E2%80%9402%E5%88%9B%E5%BB%BAPod%E5%BA%93/","path":"2023/04/05/从零创建一个iOS端app——02创建Pod库/","title":"从零创建一个iOS端app——02创建Pod库"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>我的个税退税 | 章肿鱼</title>
+<title>从零创建一个iOS端app——02创建Pod库 | 章肿鱼</title>
   
 
 
@@ -141,7 +140,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E6%89%80%E5%BE%97%E7%A8%8E"><span class="nav-number">1.</span> <span class="nav-text">个人所得税</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%93%E9%A1%B9%E9%99%84%E5%8A%A0%E7%A8%8E%E6%89%A3%E9%99%A4"><span class="nav-number">1.1.</span> <span class="nav-text">专项附加税扣除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%81%8C%E4%B8%9A%E8%B5%84%E6%A0%BC%E8%AE%A4%E8%AF%81"><span class="nav-number">1.2.</span> <span class="nav-text">职业资格认证</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%BF%E2%BE%A5%E4%BA%91Apsara-Clouder%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%93%E9%A1%B9%E6%8A%80%E8%83%BD%E8%AE%A4%E8%AF%81"><span class="nav-number">1.2.1.</span> <span class="nav-text">阿⾥云Apsara Clouder云计算专项技能认证</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAPod%E5%B7%A5%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">本地创建一个Pod工程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E6%B5%8B%E8%AF%95"><span class="nav-number">2.</span> <span class="nav-text">本地仓库测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA-amp-%E6%B7%BB%E5%8A%A0%E5%88%B0%E8%BF%9C%E7%AB%AF%E4%BB%93%E5%BA%93"><span class="nav-number">3.</span> <span class="nav-text">创建&amp;添加到远端仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0tag%E6%A0%87%E7%AD%BE"><span class="nav-number">4.</span> <span class="nav-text">添加tag标签</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E5%B8%83%E5%88%B0Cocoapods"><span class="nav-number">5.</span> <span class="nav-text">发布到Cocoapods</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -206,7 +205,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://newbiecv.github.io/2023/03/20/%E6%88%91%E7%9A%84%E4%B8%AA%E7%A8%8E%E9%80%80%E7%A8%8E/">
+    <link itemprop="mainEntityOfPage" href="https://newbiecv.github.io/2023/04/05/%E4%BB%8E%E9%9B%B6%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAiOS%E7%AB%AFapp%E2%80%94%E2%80%9402%E5%88%9B%E5%BB%BAPod%E5%BA%93/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -219,12 +218,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="我的个税退税 | 章肿鱼">
-      <meta itemprop="description" content="写给某个人的退税小技巧，虽然纳税光荣，但是目前情况生活压力还是比较大的，所以先能省的是点吧^-^">
+      <meta itemprop="name" content="从零创建一个iOS端app——02创建Pod库 | 章肿鱼">
+      <meta itemprop="description" content="iOS开发中必不可少的会引入Pod依赖，如何创建一个属于自己的Pod库呢">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          我的个税退税
+          从零创建一个iOS端app——02创建Pod库
         </h1>
 
         <div class="post-meta-container">
@@ -235,14 +234,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2023-03-20 00:36:03" itemprop="dateCreated datePublished" datetime="2023-03-20T00:36:03+08:00">2023-03-20</time>
+      <time title="创建时间：2023-04-05 20:59:26" itemprop="dateCreated datePublished" datetime="2023-04-05T20:59:26+08:00">2023-04-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-21 01:54:28" itemprop="dateModified" datetime="2023-03-21T01:54:28+08:00">2023-03-21</time>
+      <time title="修改时间：2023-04-10 10:51:36" itemprop="dateModified" datetime="2023-04-10T10:51:36+08:00">2023-04-10</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -250,14 +249,18 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%B7%A5%E4%BD%9C%E7%9B%B8%E5%85%B3/" itemprop="url" rel="index"><span itemprop="name">工作相关</span></a>
+          <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/iOS/%E4%BB%8E%E9%9B%B6%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAiOS%E7%AB%AFapp/" itemprop="url" rel="index"><span itemprop="name">从零创建一个iOS端app</span></a>
         </span>
     </span>
 
   
 </div>
 
-            <div class="post-description">写给某个人的退税小技巧，虽然纳税光荣，但是目前情况生活压力还是比较大的，所以先能省的是点吧^-^</div>
+            <div class="post-description">iOS开发中必不可少的会引入Pod依赖，如何创建一个属于自己的Pod库呢</div>
         </div>
       </header>
 
@@ -265,27 +268,53 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="个人所得税"><a href="#个人所得税" class="headerlink" title="个人所得税"></a>个人所得税</h1><p>我要办税之综合所得年度汇算，在收入部分，对于年终奖部分，如果收入比较低（几千块&#x2F;月）来说，可能合并计税会比较划算；而对于身边绝大部分朋友，还是单独计税更合适。这两种计税方式可以都试下，看看到底哪个更适合自己。其次，是一些附加税的扣除。</p>
-<h2 id="专项附加税扣除"><a href="#专项附加税扣除" class="headerlink" title="专项附加税扣除"></a>专项附加税扣除</h2><ul>
-<li>子女教育，这个目前还没有，先不考虑</li>
-<li>继续教育，这部分还有提升空间，分为两部分：<ul>
-<li>学历继续教育，说实话，目前来说也不再考虑了😅</li>
-<li>职业资格继续教育，这部分还可以技术提升下，有些需要一定的时间精力的，比如软考中级证书、初级会计资格证等，还有一些是不需要花费多少时间的，这种的就比较友好了。</li>
+        <span id="more"></span>
+
+<h2 id="本地创建一个Pod工程"><a href="#本地创建一个Pod工程" class="headerlink" title="本地创建一个Pod工程"></a>本地创建一个Pod工程</h2><ol>
+<li>起一个Pod仓库名，使用<code>pod lib lint 仓库名</code>来校验是否被占用。 </li>
+<li>命令行输入<code>pod lib create 仓库名</code>，之后会克隆CocoaPods的<code>pod-template</code>到该仓库。<br>在执行这个命令的时候，遇到了两个问题：<ul>
+<li><code>Ignoring ffi-1.15.5 because its extensions are not built. Try: gem pristine ffi --version 1.15.5</code>，解决方案：<ol>
+<li><code>brew install rbenv</code></li>
+<li><code>rbenv install 3.1.2</code></li>
+<li><code>rbenv global 3.1.2</code></li>
+<li><code>sudo gem install ffi --version 1.15.5 --user-install</code></li>
+</ol>
+</li>
+<li><code> Could not find &#39;rexml&#39; (~&gt; 3.2.4) - did find: [rexml-3.1.9.1] (Gem::MissingSpecVersionError)</code>，解决方案：<code>sudo gem update rexml</code>更新一下rexml版本。</li>
 </ul>
 </li>
-<li>大病医疗，还没有，也不希望有 嘿嘿</li>
-<li>住房贷款利息，目前还没有，快了快了</li>
-<li>住房租金<ul>
-<li>有一定要如实填写，这部分能有一万八的抵税额度，公司发的工资虽然已经扣除过了，但是如果自己不申报会把这部分的额度重新计税。</li>
-</ul>
-</li>
-<li>赡养老人，父母到60岁才可以用，别的没办法</li>
-<li>3岁以下婴幼儿护照，有了孩子再说吧，感觉离我还很遥远</li>
-</ul>
-<h2 id="职业资格认证"><a href="#职业资格认证" class="headerlink" title="职业资格认证"></a>职业资格认证</h2><h3 id="阿⾥云Apsara-Clouder云计算专项技能认证"><a href="#阿⾥云Apsara-Clouder云计算专项技能认证" class="headerlink" title="阿⾥云Apsara Clouder云计算专项技能认证"></a><a target="_blank" rel="noopener" href="https://edu.aliyun.com/certification/cldc15">阿⾥云Apsara Clouder云计算专项技能认证</a></h3><p>网站：<a target="_blank" rel="noopener" href="https://edu.aliyun.com/certification/cldc15">https://edu.aliyun.com/certification/cldc15</a></p>
-<p><em>0成本考证填报个税纳税额减免3600</em></p>
-<p>题目比较固定，大部分题目网上很多答案，直接搜就可以了。贴一个自用的链接答案 <a target="_blank" rel="noopener" href="https://blog.csdn.net/spacehhy/article/details/128917928">https://blog.csdn.net/spacehhy/article/details/128917928</a></p>
-<p>申报：<br>    1. <code>职业资格继续教育类型</code>选择<code>专业技术人员职业资格</code>；<br>    2. 发证日期 &amp; 证书编号，填写证书上的信息；<br>    3. <code>证书名称</code>选择<code>计算机技术与软件专业技术资格</code>；<br>    4. <code>发证机关</code>选择<code>阿里云</code>。</p>
+<li>创建过程中会有一些输入，根据自己需要来添加即可：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">What platform do you want to use?? [ iOS / macOS ]</span><br><span class="line"> &gt; iOS</span><br><span class="line"></span><br><span class="line">What language do you want to use?? [ Swift / ObjC ]</span><br><span class="line"> &gt; Swift</span><br><span class="line"></span><br><span class="line">Would you like to include a demo application with your library? [ Yes / No ]</span><br><span class="line"> &gt; Yes</span><br><span class="line"></span><br><span class="line">Which testing frameworks will you use? [ Quick / None ]</span><br><span class="line"> &gt; None</span><br><span class="line"></span><br><span class="line">Would you like to do view based testing? [ Yes / No ]</span><br><span class="line"> &gt; NO</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="本地仓库测试"><a href="#本地仓库测试" class="headerlink" title="本地仓库测试"></a>本地仓库测试</h2><p>在<code>**.podspec</code>中添加一些子仓需要的依赖（同<code>Podfile</code>），如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s.dependency &#x27;SnapKit&#x27;, &#x27;~&gt; 5.0.0&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>对Classes中的<code>ReplaceMe.swift</code>文件进行替换。</p>
+<p>对子仓中的Example工程进行<code>pod install</code>，编写测试方法即可。</p>
+<h2 id="创建-amp-添加到远端仓库"><a href="#创建-amp-添加到远端仓库" class="headerlink" title="创建&amp;添加到远端仓库"></a>创建&amp;添加到远端仓库</h2><ol>
+<li>在GitHub创建一个同名Repo。</li>
+<li>修改本地仓的<code>**.podspec</code>文件，修改<code>s.homepage</code>和<code>s.source</code>等必要信息。</li>
+<li>本地仓库与远程仓库关联（换成自己的）：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin https://github.com/newbieCV/AHComponents.git</span><br><span class="line">git branch -M main</span><br><span class="line">git push -u origin main</span><br></pre></td></tr></table></figure></li>
+<li>git提交本地仓修改</li>
+</ol>
+<h2 id="添加tag标签"><a href="#添加tag标签" class="headerlink" title="添加tag标签"></a>添加tag标签</h2><p>在引入子仓依赖时，都会指定一个版本号（tag标记）。<br>为了方便被引用，需要对当前代码提交打个tag标记。</p>
+<p>在本地子仓中设置tag标记，并push到远端。<br>更新完成后在远端仓库可以看到如图所示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git tag 0.1.0</span><br><span class="line">git push --tags</span><br></pre></td></tr></table></figure>
+
+<h2 id="发布到Cocoapods"><a href="#发布到Cocoapods" class="headerlink" title="发布到Cocoapods"></a>发布到Cocoapods</h2><p>在发布前，需要对当前子仓的podspec的合法性进行检查。可选择<code>--allow-warnings</code>忽略警告。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod lib lint --verbose</span><br></pre></td></tr></table></figure>
+
+<p>如果本地验证通过（终端最后出现<code>*** passed validation.</code>），则可以继续提交到Cocoapods。</p>
+<p>提交podspec仓库：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod trunk push ***.podspec --verbose</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>或许高兴早了？<br><code>[!] You need to run </code>pod trunk register<code> to register a session first.</code></p>
+<p>那就注册一下trunk吧</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod trunk register 电子邮箱 &#x27;姓名&#x27; --description=&#x27;macbook pro&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>随后出现<code>[!] Please verify the session by clicking the link in the verification email that has been sent to zhangzongyu00@gmail.com</code>，<br>打开邮箱信任一下就好。</p>
+<p>查看是否注册成功：<code>pod trunk me</code>。</p>
+<p>重新执行<code>pod trunk push ***.podspec --verbose</code>，<br>还不马上去工程里面调用试试 fun!</p>
 
     </div>
 
@@ -294,21 +323,18 @@
     
 
     <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/%E4%B8%AA%E4%BA%BA%E6%89%80%E5%BE%97%E7%A8%8E/" rel="tag"><i class="fa fa-tag"></i> 个人所得税</a>
-          </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/03/19/Hexo%E5%8D%9A%E5%AE%A2/" rel="prev" title="Hexo博客">
-                  <i class="fa fa-chevron-left"></i> Hexo博客
+                <a href="/2023/04/03/%E4%BB%8E%E9%9B%B6%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAiOS%E7%AB%AFapp%E2%80%94%E2%80%9401%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B/" rel="prev" title="从零创建一个iOS端app——01创建工程">
+                  <i class="fa fa-chevron-left"></i> 从零创建一个iOS端app——01创建工程
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2023/03/20/frame%20VS%20bounds/" rel="next" title="frame VS bounds">
-                  frame VS bounds <i class="fa fa-chevron-right"></i>
+                <a href="/2023/04/08/iOS%E5%85%AB%E8%82%A1%E6%96%87%E2%80%94%E2%80%9401/" rel="next" title="iOS八股文——01">
+                  iOS八股文——01 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
