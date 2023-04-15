@@ -528,4 +528,34 @@
         <category>随笔</category>
       </categories>
   </entry>
+  <entry>
+    <title>iOS添加高德地图</title>
+    <url>/2023/04/15/iOS%E6%B7%BB%E5%8A%A0%E9%AB%98%E5%BE%B7%E5%9C%B0%E5%9B%BE/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><span id="more"></span>
+
+<h2 id="基础准备工作"><a href="#基础准备工作" class="headerlink" title="基础准备工作"></a>基础准备工作</h2><p><a href="https://console.amap.com/dev/index">高德地图官网</a>申请APIKey。</p>
+<p>podspec或podfile添加依赖：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">s.dependency &#x27;AMap3DMap-NO-IDFA&#x27;, &#x27;~&gt; 8.1.0&#x27;</span><br><span class="line">s.dependency &#x27;AMapSearch-NO-IDFA&#x27;, &#x27;~&gt; 8.1.0&#x27;</span><br><span class="line">s.dependency &#x27;AMapLocation-NO-IDFA&#x27;, &#x27;~&gt; 2.8.0&#x27;</span><br><span class="line">s.dependency &#x27;AMapFoundation-NO-IDFA&#x27;, &#x27;~&gt; 1.6.9&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><code>info.plist</code>添加https支持：</p>
+<img data-src="/2023/04/15/iOS%E6%B7%BB%E5%8A%A0%E9%AB%98%E5%BE%B7%E5%9C%B0%E5%9B%BE/%E6%B7%BB%E5%8A%A0https%E6%94%AF%E6%8C%81.png" class>
+
+<p>添加基本配置文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// APIkey需要自行到官网获取</span><br><span class="line">AMapServices.shared().apiKey = key</span><br><span class="line">// 更新协议，8.1.0版本开始</span><br><span class="line">MAMapView.updatePrivacyAgree(.didAgree)</span><br><span class="line">MAMapView.updatePrivacyShow(.didShow, privacyInfo: .didContain)</span><br><span class="line">// 打开https开关</span><br><span class="line">AMapServices.shared().enableHTTPS = true</span><br></pre></td></tr></table></figure>
+
+<h2 id="地图配置-amp-定位权限"><a href="#地图配置-amp-定位权限" class="headerlink" title="地图配置 &amp; 定位权限"></a>地图配置 &amp; 定位权限</h2><p>添加地图，不能使用懒加载写法（否则出不来就离谱）：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">let mapView = MAMapView(frame: CGRect(origin: .zero, size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 100)))</span><br><span class="line">mapView.delegate = self // 需要前置</span><br><span class="line">mapView.showsUserLocation = true</span><br><span class="line">mapView.compassOrigin = CGPoint(x: UIScreen.main.bounds.width - 40, y: 80)</span><br><span class="line">mapView.zoomLevel = 13</span><br><span class="line">view.addSubview(mapView)</span><br></pre></td></tr></table></figure>
+
+<p><code>info.plist</code>添加定位权限支持：</p>
+<img data-src="/2023/04/15/iOS%E6%B7%BB%E5%8A%A0%E9%AB%98%E5%BE%B7%E5%9C%B0%E5%9B%BE/%E6%B7%BB%E5%8A%A0%E5%AE%9A%E4%BD%8D%E6%9D%83%E9%99%90%E6%94%AF%E6%8C%81.png" class>
+
+<p>开启定位权限，需实现<code>MAMapViewDelegate</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public func mapViewRequireLocationAuth(_ locationManager: CLLocationManager!) &#123;</span><br><span class="line">    locationManager.requestAlwaysAuthorization()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>自动定位到当前定位位置：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">var isFirstLoadMap = false</span><br><span class="line">/// 基于定位位置，在定位回调中进行POI搜索和逆地理编码</span><br><span class="line">public func mapView(_ mapView: MAMapView!, didUpdate userLocation: MAUserLocation!, updatingLocation: Bool) &#123;</span><br><span class="line">    if !updatingLocation || userLocation.location.horizontalAccuracy &lt; 0 &#123;</span><br><span class="line">        return</span><br><span class="line">    &#125;</span><br><span class="line">    if !isFirstLoadMap &#123;</span><br><span class="line">        isFirstLoadMap = true</span><br><span class="line">        mapView.centerCoordinate = userLocation.location.coordinate</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="个性化配置"><a href="#个性化配置" class="headerlink" title="个性化配置"></a>个性化配置</h2><p>地图自适应大小，<a href="https://lbs.amap.com/demo/sdk/map-zoomtospan#ios">根据传入的经纬度数组自动调整地图大小</a>：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">func showsAnnotations(_ annotations: [MAPointAnnotation], edgePadding insets:UIEdgeInsets, _ mapView: MAMapView) &#123;</span><br><span class="line">        var rect:MAMapRect = MAMapRectZero</span><br><span class="line"></span><br><span class="line">        for annotation:MAPointAnnotation in annotations &#123;</span><br><span class="line">            let diagonalPoint:CLLocationCoordinate2D = CLLocationCoordinate2DMake(mapView.centerCoordinate.latitude - (annotation.coordinate.latitude - mapView.centerCoordinate.latitude),mapView.centerCoordinate.longitude - (annotation.coordinate.longitude - mapView.centerCoordinate.longitude))</span><br><span class="line"></span><br><span class="line">            let annotationMapPoint: MAMapPoint = MAMapPointForCoordinate(annotation.coordinate)</span><br><span class="line">            let diagonalPointMapPoint: MAMapPoint = MAMapPointForCoordinate(diagonalPoint)</span><br><span class="line"></span><br><span class="line">            let annotationRect:MAMapRect = MAMapRectMake(min(annotationMapPoint.x, diagonalPointMapPoint.x), min(annotationMapPoint.y, diagonalPointMapPoint.y), abs(annotationMapPoint.x - diagonalPointMapPoint.x), abs(annotationMapPoint.y - diagonalPointMapPoint.y));</span><br><span class="line"></span><br><span class="line">            rect = MAMapRectUnion(rect, annotationRect)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        mapView.setVisibleMapRect(rect, edgePadding: insets, animated: true)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>]]></content>
+  </entry>
 </search>
